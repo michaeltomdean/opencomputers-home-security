@@ -1,4 +1,5 @@
--- Monitor player events and keep a log so that we can keep track of who is coming and going on the island
+-- Hub Lua Script. Run on the hub server that is storing the data
+-- from your sensors.
 
 local event = require("event")
 local os = require("os")
@@ -9,7 +10,8 @@ local filesystem = require("filesystem")
 modem = component.modem
 modem.open(99)
 
-path = "/home/monitor_players/data/log.txt"
+path = "/home/monitor_players/data/log.txt" --Log file path
+max_size = 3175000 -- Max file size before the log file is erased.
 
 function split (inputstr, sep)
   local t = {}
@@ -26,7 +28,7 @@ function writeData(datetime, modem_msg)
   file:close()  
 end
 
-function getRealTime()
+function getRealTime() -- Change based on your time zone
   response = internet.request("http://worldtimeapi.org/api/timezone/Europe/London.txt")
   local body = ""
   for chunk in response do
@@ -40,7 +42,7 @@ while true do
   event_id, hub_id, sender_id, port, _, msg = event.pull("modem")
   filesize = filesystem.size(path)
   print("Log size: ", filesize)
-  if filesize > 3175000 then
+  if filesize > max_size then
     file = io.open(path, "w")
     file:close()
   end

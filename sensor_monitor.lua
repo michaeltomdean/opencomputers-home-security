@@ -11,8 +11,8 @@ modem = component.modem
 component.motion_sensor.setSensitivity(500)
 hub_id = "d54cb33a-7367-4df1-abb9-a2690d6c0001"
 port = 99
-sensor_location = "Shared Workshop"
-ignored_entities = {"Michaelius", "EloItsMee", "Wolf"}
+sensor_location = "Shared Workshop" -- Custom sensor location
+ignored_entities = {"Michaelius", "EloItsMee", "Wolf"} -- Ignored players & entities.
 
 print("Monitoring Sensors..")
 
